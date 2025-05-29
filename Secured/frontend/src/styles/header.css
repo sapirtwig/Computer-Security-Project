@@ -1,0 +1,36 @@
+header {
+  width: 100%;
+  background-color: #275559;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.logo {
+  height: 40px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  font-weight: bold;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #befcae;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.nav-links span {
+  color: white;
+}

